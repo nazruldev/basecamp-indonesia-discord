@@ -1,13 +1,15 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "tsx watch index.ts"
+    "dev": "tsx watch index.ts",
+    "start": "node -r tsconfig-paths/register --import tsx index.ts"
   },
   "dependencies": {
     "@hono/node-server": "^1.19.12",
     "discord.js": "^14.26.0",
     "dotenv": "^17.3.1",
-    "hono": "^4.12.9"
+    "hono": "^4.12.9",
+    "tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
     "@types/node": "^25.5.0",
