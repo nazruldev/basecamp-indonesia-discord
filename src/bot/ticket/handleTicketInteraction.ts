@@ -115,15 +115,24 @@ async function createTicketChannel(
   }
 
   const categoryId = getTicketCategoryId();
+  const createOptions: {
+    name: string;
+    type: ChannelType.GuildText;
+    topic: string;
+    permissionOverwrites: OverwriteResolvable[];
+    reason: string;
+    parent?: string;
+  } = {
+    name: `${kind}-${safeName(owner.displayName)}`,
+    type: ChannelType.GuildText,
+    topic: `${marker} owner:${owner.id}`,
+    permissionOverwrites: overwrites,
+    reason: `Create ${kind} ticket by ${owner.user.tag}`,
+  };
+  if (categoryId) createOptions.parent = categoryId;
+
   const channel = await guild.channels
-    .create({
-      name: `${kind}-${safeName(owner.displayName)}`,
-      type: ChannelType.GuildText,
-      parent: categoryId ?? undefined,
-      topic: `${marker} owner:${owner.id}`,
-      permissionOverwrites: overwrites,
-      reason: `Create ${kind} ticket by ${owner.user.tag}`,
-    })
+    .create(createOptions)
     .catch(() => null);
   if (!channel || channel.type !== ChannelType.GuildText) return null;
 
