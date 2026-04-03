@@ -1,14 +1,8 @@
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
-
-type GameCfg = Record<string, { tempHubId?: string }>;
-
-const gameConfigPath = resolve(process.cwd(), "data", "game-config.json");
+import { readGameConfigFile } from "@/config/gameConfig.js";
 
 const getDynamicTempHubIds = (): string[] => {
   try {
-    const raw = readFileSync(gameConfigPath, "utf8");
-    const parsed = JSON.parse(raw) as GameCfg;
+    const parsed = readGameConfigFile();
     return Object.values(parsed)
       .map((v) => v?.tempHubId?.trim())
       .filter((v): v is string => Boolean(v));

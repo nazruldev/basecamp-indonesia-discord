@@ -162,7 +162,11 @@ export default async (oldState: VoiceState, newState: VoiceState) => {
           member.id,
           created.id
         );
-      } catch {
+      } catch (moveErr) {
+        console.error(
+          "[tempvoice] pindah user ke room baru gagal (cek permission Connect/View):",
+          moveErr
+        );
         await created.delete().catch(() => {});
         tempVoiceOwners.delete(created.id);
       }
